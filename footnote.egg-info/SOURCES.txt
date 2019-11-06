@@ -1,0 +1,9 @@
+README.md
+setup.py
+footnote/__init__.py
+footnote/footnote.py
+footnote.egg-info/PKG-INFO
+footnote.egg-info/SOURCES.txt
+footnote.egg-info/dependency_links.txt
+footnote.egg-info/not-zip-safe
+footnote.egg-info/top_level.txt

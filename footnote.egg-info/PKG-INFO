@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: footnote
+Version: 0.1.0
+Summary: Patches your code comments into logging calls
+Home-page: https://github.com/itsmealves/footnote
+Author: Gabriel Alves
+Author-email: gabriel.alves@pickcells.bio
+License: MIT
+Description: # Footnote
+        #### Patches your code comments into logging calls
+Keywords: logging,comment,patch,monkey
+Platform: UNKNOWN
+Requires-Python: >=3.5
+Description-Content-Type: text/markdown
