@@ -17,6 +17,10 @@ class Footnote(ABC):
         pass
 
     @staticmethod
+    def get_context():
+        return {}
+
+    @staticmethod
     def normalize_indentation(source):
         return textwrap.dedent(source)
 
@@ -70,7 +74,7 @@ class Footnote(ABC):
         source = inspect.getsource(fn)
         patched_source = reduce(lambda a, b: b(a), transforms, source)
         
-        exec(patched_source, {}, local)
+        exec(patched_source, cls.get_context(), local)
         patched_fn = local.get('patched_fn')
 
         @wraps(fn)
