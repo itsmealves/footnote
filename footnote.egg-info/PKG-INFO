@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: footnote
-Version: 0.1.0
+Version: 0.1.3
 Summary: Patches your code comments into logging calls
 Home-page: https://github.com/itsmealves/footnote
 Author: Gabriel Alves

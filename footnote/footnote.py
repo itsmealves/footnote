@@ -32,7 +32,8 @@ class Footnote(ABC):
 
             def replace_args(t):
                 p = re.sub(r'\$\{.+\}', '{}', t)
-                return re.sub(r'^\w+:', '', p).strip()
+                q = re.sub(r'^\w+:', '', p).strip()
+                return q.replace('\'', '\\\'')
             def find_prefix(t):
                 match = re.match(r'^\w+:', full_text)
                 if not match: return None
@@ -62,7 +63,7 @@ class Footnote(ABC):
         return re.sub(r'def\ \w+', 'def patched_fn', source)
 
     @classmethod
-    def inject(cls, fn):
+    def inject(cls, fn, custom_context={}):
         transforms = [
             cls.replace_comments,
             cls.remove_decorators,
@@ -74,7 +75,8 @@ class Footnote(ABC):
         source = inspect.getsource(fn)
         patched_source = reduce(lambda a, b: b(a), transforms, source)
         
-        exec(patched_source, cls.get_context(), local)
+        context = {**fn.__globals__, **custom_context, **cls.get_context()}
+        exec(patched_source, context, local)
         patched_fn = local.get('patched_fn')
 
         @wraps(fn)
@@ -82,3 +84,8 @@ class Footnote(ABC):
             return patched_fn(*args, **kwargs)
         return wrapper
 
+    @classmethod
+    def spread(cls, inject_cls):
+        for _, fn in inspect.getmembers(inject_cls, predicate=inspect.isfunction):
+            cls.inject(fn, { inject_cls.__name__: inject_cls })
+        return inject_cls
